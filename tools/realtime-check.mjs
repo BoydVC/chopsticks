@@ -1,0 +1,10 @@
+import puppeteer from "puppeteer-core";
+const b = await puppeteer.launch({ executablePath: "/usr/bin/google-chrome", headless: "new", args: ["--no-sandbox", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
+const p = await b.newPage(); await p.setViewport({ width: 800, height: 500 });
+const errs = []; p.on("pageerror", (e) => errs.push(String(e)));
+await p.goto("http://127.0.0.1:4242/", { waitUntil: "load" });
+await new Promise((r) => setTimeout(r, 15000)); const t1 = await p.evaluate(() => window.__chop.state().t);
+await p.keyboard.press("Digit2"); await new Promise((r) => setTimeout(r, 12000));
+const s = await p.evaluate(() => window.__chop.state());
+console.log("demo sim-t after 15s wall:", t1.toFixed(2), "ship mode state:", s.state, s.t.toFixed(2), s.phase, "errors:", errs);
+await b.close();

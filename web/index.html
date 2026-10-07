@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="data:,">
+<title>Chopsticks · a booster catch game (fan project)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="letterbox"><i></i><i></i></div>
+<div id="hud" class="hidden">
+  <div id="hud-tl"><div id="h-mode"></div><div id="h-sub"></div></div>
+  <div id="hud-left" class="panel">
+    <div class="row"><span id="h-altlab">ALT ABOVE ARMS</span><b id="h-alt">—</b></div>
+    <div class="row"><span>VERT SPEED</span><b id="h-vy">—</b></div>
+    <div class="row"><span>TO TARGET</span><b id="h-x">—</b></div>
+    <div class="row"><span>SIDE SPEED</span><b id="h-vx">—</b></div>
+    <div class="row"><span>TILT</span><b id="h-th">—</b></div>
+    <div class="row cue"><span>IGNITION CUE</span><b id="h-cue">—</b></div>
+  </div>
+  <div id="hud-right" class="panel">
+    <div class="bars">
+      <div class="bar"><div class="lab">THR</div><div class="track"><i id="b-thr"></i><em id="b-cmd"></em></div><div id="h-thr" class="val">0%</div></div>
+      <div class="bar"><div class="lab">FUEL</div><div class="track"><i id="b-fuel" class="fuel"></i></div><div id="h-fuel" class="val">100%</div></div>
+    </div>
+    <div class="row"><span>ENGINES</span><b id="h-eng">OFF</b></div>
+    <div class="row"><span>GIMBAL</span><b id="h-gim">0°</b></div>
+    <div class="row"><span id="h-finlab">GRID FINS</span><b id="h-fin">0</b></div>
+    <div class="row"><span>WIND</span><b id="h-wind">—</b></div>
+  </div>
+  <canvas id="scope" width="300" height="190"></canvas>
+  <div id="camtag"></div>
+  <div id="callout"></div>
+  <div id="hint"></div>
+</div>
+<div id="pause" class="hidden">PAUSED</div>
+<div id="demo-tag" class="hidden">DEMO · flight computer flying</div>
+<div id="replay-tag" class="hidden">REPLAY <b>×0.35</b></div>
+
+<div id="menu" class="overlay">
+  <div class="card menu">
+    <div class="logo"><span class="sticks"><i></i><i></i></span><div><h1>CHOPSTICKS</h1><div class="tag">Fly the booster home. Let the tower catch it.</div></div></div>
+    <div class="modes">
+      <button data-mode="catch" class="mode primary"><b>Booster Catch</b><span>Super Heavy, the tower and two very large chopsticks</span></button>
+      <button data-mode="ship" class="mode"><b>Ship Splashdown</b><span>Belly-flop, flip, burn, splash beside the buoy</span></button>
+      <button data-mode="daily" class="mode"><b>Daily Challenge</b><span id="daily-sub">Same seeded winds for everyone today</span></button>
+    </div>
+    <div class="cols">
+      <div class="controls">
+        <h3>Controls</h3>
+        <div><kbd>Space</kbd> light engines · <kbd>W</kbd>/<kbd>S</kbd> or <kbd>↑</kbd>/<kbd>↓</kbd> throttle · <kbd>Shift</kbd> full · <kbd>X</kbd> cut</div>
+        <div><kbd>A</kbd>/<kbd>D</kbd> or <kbd>←</kbd>/<kbd>→</kbd> steer (the flight computer works the gimbal and grid fins)</div>
+        <div><kbd>C</kbd> camera · <kbd>V</kbd> auto-director · <kbd>R</kbd> replay/retry · <kbd>T</kbd> autopilot (unranked) · <kbd>P</kbd> pause · <kbd>M</kbd> mute · <kbd>Esc</kbd> menu</div>
+        <div class="mut">Touch: steer pads on the left, throttle slider on the right.</div>
+        <h3>How to catch</h3>
+        <div class="mut">Glide on the grid fins toward the tower, light the engines late (fuel is limited) and settle the catch pins onto the arms: slow, upright and centred. Super Heavy has no legs, so the ground is not an option.</div>
+      </div>
+      <div class="lb"><h3>Leaderboard <span id="lb-mode">Booster Catch</span></h3><ol id="lb"></ol><div class="lbtabs"><button data-lb="catch">Catch</button><button data-lb="ship">Ship</button><button data-lb="daily">Today</button></div></div>
+    </div>
+    <div class="fan">Unofficial fan project, made with admiration. Not affiliated with, endorsed by or connected to SpaceX. "Starship", "Super Heavy" and "Mechazilla" are used only to describe what the game is about. All models, sounds and physics are original and simplified.</div>
+  </div>
+</div>
+
+<div id="result" class="overlay hidden">
+  <div class="card result">
+    <div id="r-kicker"></div>
+    <h2 id="r-title"></h2>
+    <div id="r-score"></div>
+    <div id="r-parts"></div>
+    <div id="r-meas"></div>
+    <div id="r-save"><input id="r-name" maxlength="16" placeholder="Name"><button id="r-savebtn">Save score</button></div>
+    <div class="btns"><button id="r-replay">▶ Slow-mo replay <kbd>R</kbd></button><button id="r-retry" class="primary">Fly again <kbd>Enter</kbd></button><button id="r-menu">Menu <kbd>Esc</kbd></button></div>
+  </div>
+</div>
+
+<div id="touch" class="hidden">
+  <div class="tl"><button id="t-left">◀</button><button id="t-right">▶</button></div>
+  <div class="tr"><button id="t-cam">CAM</button><button id="t-ign">IGNITE</button><div class="slider"><input id="t-thr" type="range" min="0" max="100" value="0" orient="vertical"></div></div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
